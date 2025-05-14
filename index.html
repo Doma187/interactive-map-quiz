@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Europe Map Quiz (10 Precise Locations)</title>
+  <title>Europe Map Quiz (Precise 1024x1024)</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; }
     #map-container { position: relative; display: inline-block; }
-    #map { width: 90vw; max-width: 1000px; border: 1px solid #aaa; }
+    #map { width: 1024px; height: 1024px; border: 1px solid #aaa; }
     .feedback { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
     .marker, .click-point {
       position: absolute;
@@ -30,7 +30,7 @@
   </style>
 </head>
 <body>
-  <h1>Europe Interactive Map Quiz (10 Cities)</h1>
+  <h1>Europe Map Quiz (10 Cities - Precise)</h1>
   <div id="question-display">Where is: <span id="question"></span>?</div>
   <div id="map-container">
     <img id="map" src="europe-map.png" alt="Map of Europe" />
@@ -46,16 +46,16 @@
     const mapContainer = document.getElementById("map-container");
 
     const points = [
-      { name: "London", x: 215, y: 180 },
-      { name: "Paris", x: 240, y: 240 },
-      { name: "Berlin", x: 310, y: 200 },
-      { name: "Rome", x: 340, y: 325 },
-      { name: "Madrid", x: 160, y: 340 },
-      { name: "Vienna", x: 325, y: 240 },
-      { name: "Budapest", x: 345, y: 250 },
-      { name: "Warsaw", x: 370, y: 190 },
-      { name: "Athens", x: 420, y: 370 },
-      { name: "Copenhagen", x: 295, y: 160 }
+      { name: "London", x: 195, y: 315 },
+      { name: "Paris", x: 230, y: 370 },
+      { name: "Berlin", x: 330, y: 320 },
+      { name: "Rome", x: 400, y: 510 },
+      { name: "Madrid", x: 155, y: 520 },
+      { name: "Vienna", x: 360, y: 375 },
+      { name: "Budapest", x: 385, y: 390 },
+      { name: "Warsaw", x: 420, y: 310 },
+      { name: "Athens", x: 530, y: 630 },
+      { name: "Copenhagen", x: 340, y: 240 }
     ];
 
     let currentIndex = 0;
