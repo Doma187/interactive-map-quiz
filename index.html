@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Europe Map Quiz (Precise 1024x1024)</title>
+  <title>Europe Map Quiz (Corrected)</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; }
     #map-container { position: relative; display: inline-block; }
-    #map { width: 1024px; height: 1024px; border: 1px solid #aaa; }
+    #map { width: 1024px; height: auto; border: 1px solid #aaa; }
     .feedback { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
     .marker, .click-point {
       position: absolute;
@@ -30,10 +30,10 @@
   </style>
 </head>
 <body>
-  <h1>Europe Map Quiz (10 Cities - Precise)</h1>
+  <h1>Europe Map Quiz (10 Cities - Verified)</h1>
   <div id="question-display">Where is: <span id="question"></span>?</div>
   <div id="map-container">
-    <img id="map" src="europe-map.png" alt="Map of Europe" />
+    <img id="map" src="europe-map.png" alt="Accurate Map of Europe" />
     <div id="marker" class="marker" style="display: none;"></div>
   </div>
   <div class="feedback" id="feedback"></div>
@@ -46,16 +46,16 @@
     const mapContainer = document.getElementById("map-container");
 
     const points = [
-      { name: "London", x: 195, y: 315 },
-      { name: "Paris", x: 230, y: 370 },
-      { name: "Berlin", x: 330, y: 320 },
-      { name: "Rome", x: 400, y: 510 },
-      { name: "Madrid", x: 155, y: 520 },
-      { name: "Vienna", x: 360, y: 375 },
-      { name: "Budapest", x: 385, y: 390 },
-      { name: "Warsaw", x: 420, y: 310 },
-      { name: "Athens", x: 530, y: 630 },
-      { name: "Copenhagen", x: 340, y: 240 }
+      { name: "London", x: 180, y: 240 },
+      { name: "Paris", x: 220, y: 300 },
+      { name: "Berlin", x: 340, y: 240 },
+      { name: "Rome", x: 370, y: 440 },
+      { name: "Madrid", x: 150, y: 460 },
+      { name: "Vienna", x: 360, y: 310 },
+      { name: "Budapest", x: 390, y: 330 },
+      { name: "Warsaw", x: 430, y: 250 },
+      { name: "Athens", x: 500, y: 530 },
+      { name: "Copenhagen", x: 330, y: 190 }
     ];
 
     let currentIndex = 0;
