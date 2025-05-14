@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hungary Interactive Map Quiz</title>
+  <title>Europe Interactive Map Quiz</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; }
     #map-container { position: relative; display: inline-block; }
@@ -23,19 +23,17 @@
       opacity: 0.5;
       cursor: pointer;
     }
-    #region-select, #question-display {
+    #question-display {
       margin: 20px auto;
       font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Hungary Interactive Map Quiz</h1>
-
+  <h1>Europe Interactive Map Quiz</h1>
   <div id="question-display">Where is: <span id="question"></span>?</div>
-
   <div id="map-container">
-    <img id="map" src="hungary-map.png" alt="Map of Hungary" />
+    <img id="map" src="europe-map.png" alt="Map of Europe" />
     <div id="marker" class="marker" style="display: none;"></div>
   </div>
   <div class="feedback" id="feedback"></div>
@@ -48,26 +46,26 @@
     const mapContainer = document.getElementById("map-container");
 
     const points = [
-      { name: "Budapest", x: 480, y: 280 },
-      { name: "Debrecen", x: 690, y: 250 },
-      { name: "Szeged", x: 600, y: 360 },
-      { name: "Győr", x: 310, y: 230 },
-      { name: "Miskolc", x: 620, y: 180 },
-      { name: "Pécs", x: 400, y: 400 },
-      { name: "Lake Balaton", x: 380, y: 300 },
-      { name: "Danube River", x: 460, y: 300 },
-      { name: "Tisza River", x: 650, y: 280 },
-      { name: "Hortobágy", x: 670, y: 270 },
-      { name: "Tokaj", x: 670, y: 220 },
-      { name: "Sopron", x: 250, y: 200 },
-      { name: "Esztergom", x: 420, y: 230 },
-      { name: "Szolnok", x: 570, y: 270 },
-      { name: "Kecskemét", x: 540, y: 290 },
-      { name: "Székesfehérvár", x: 420, y: 260 },
-      { name: "Visegrád", x: 460, y: 250 },
-      { name: "Aggteleki NP", x: 600, y: 160 },
-      { name: "Baja", x: 480, y: 370 },
-      { name: "Eger", x: 570, y: 200 }
+      { name: "London", x: 230, y: 190 },
+      { name: "Paris", x: 260, y: 250 },
+      { name: "Berlin", x: 330, y: 210 },
+      { name: "Rome", x: 350, y: 330 },
+      { name: "Madrid", x: 180, y: 340 },
+      { name: "Warsaw", x: 390, y: 190 },
+      { name: "Vienna", x: 340, y: 240 },
+      { name: "Budapest", x: 360, y: 250 },
+      { name: "Prague", x: 330, y: 220 },
+      { name: "Bucharest", x: 440, y: 280 },
+      { name: "Athens", x: 440, y: 370 },
+      { name: "Oslo", x: 300, y: 100 },
+      { name: "Copenhagen", x: 310, y: 170 },
+      { name: "Dublin", x: 180, y: 180 },
+      { name: "Helsinki", x: 400, y: 80 },
+      { name: "Lisbon", x: 150, y: 360 },
+      { name: "Amsterdam", x: 280, y: 200 },
+      { name: "Brussels", x: 270, y: 220 },
+      { name: "Reykjavik", x: 80, y: 60 },
+      { name: "Moscow", x: 510, y: 140 }
     ];
 
     let currentIndex = 0;
