@@ -9,15 +9,22 @@
     #map-container { position: relative; display: inline-block; }
     #map { width: 90vw; max-width: 1000px; border: 1px solid #aaa; }
     .feedback { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
-    .marker {
+    .marker, .click-point {
       position: absolute;
       width: 10px;
       height: 10px;
-      background: red;
       border-radius: 50%;
       transform: translate(-50%, -50%);
     }
-    #region-select {
+    .marker {
+      background: red;
+    }
+    .click-point {
+      background: blue;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+    #region-select, #question-display {
       margin: 20px auto;
       font-size: 1em;
     }
@@ -34,6 +41,8 @@
     <option value="hungary">Hungary</option>
   </select>
 
+  <div id="question-display">Where is: <span id="question"></span>?</div>
+
   <div id="map-container">
     <img id="map" src="americas-map.png" alt="Map" />
     <div id="marker" class="marker" style="display: none;"></div>
@@ -45,66 +54,135 @@
     const feedback = document.getElementById("feedback");
     const marker = document.getElementById("marker");
     const regionSelect = document.getElementById("region-select");
+    const questionEl = document.getElementById("question");
+    const mapContainer = document.getElementById("map-container");
 
     const regionData = {
+      asia: {
+        img: "asia-map.png",
+        points: [
+          { name: "Dubai", x: 420, y: 270 },
+          { name: "Tokyo", x: 750, y: 220 },
+          { name: "Beijing", x: 650, y: 180 }
+        ]
+      },
       americas: {
         img: "americas-map.png",
-        correctLocation: { x: 500, y: 320 },
+        points: [
+          { name: "New York", x: 600, y: 180 },
+          { name: "Amazon", x: 520, y: 480 },
+          { name: "Mexico City", x: 480, y: 300 }
+        ]
       },
       europe: {
         img: "europe-map.png",
-        correctLocation: { x: 300, y: 220 },
+        points: [
+          { name: "London", x: 300, y: 180 },
+          { name: "Paris", x: 320, y: 200 },
+          { name: "Berlin", x: 360, y: 180 }
+        ]
       },
       africa: {
         img: "africa-map.png",
-        correctLocation: { x: 400, y: 350 },
-      },
-      asia: {
-        img: "asia-map.png",
-        correctLocation: { x: 600, y: 250 },
+        points: [
+          { name: "Cairo", x: 420, y: 150 },
+          { name: "Cape Town", x: 440, y: 500 },
+          { name: "Nairobi", x: 460, y: 320 }
+        ]
       },
       oceania: {
         img: "oceania-map.png",
-        correctLocation: { x: 700, y: 400 },
+        points: [
+          { name: "Sydney", x: 680, y: 420 },
+          { name: "Auckland", x: 750, y: 480 },
+          { name: "Canberra", x: 660, y: 440 }
+        ]
       },
       hungary: {
         img: "hungary-map.png",
-        correctLocation: { x: 250, y: 200 },
+        points: [
+          { name: "Budapest", x: 315, y: 210 },
+          { name: "Debrecen", x: 415, y: 200 },
+          { name: "Szeged", x: 365, y: 270 },
+          { name: "Győr", x: 220, y: 185 },
+          { name: "Miskolc", x: 390, y: 160 },
+          { name: "Pécs", x: 270, y: 290 },
+          { name: "Lake Balaton", x: 250, y: 230 },
+          { name: "Danube", x: 300, y: 200 },
+          { name: "Tisza", x: 390, y: 210 },
+          { name: "Hortobágy", x: 410, y: 220 },
+          { name: "Tokaj", x: 425, y: 180 },
+          { name: "Sopron", x: 185, y: 170 },
+          { name: "Esztergom", x: 280, y: 175 },
+          { name: "Szolnok", x: 365, y: 200 },
+          { name: "Kecskemét", x: 345, y: 220 },
+          { name: "Székesfehérvár", x: 270, y: 195 },
+          { name: "Visegrád", x: 300, y: 180 },
+          { name: "Szeged National Park", x: 360, y: 275 },
+          { name: "Aggteleki NP", x: 385, y: 145 }
+        ]
       }
     };
 
     let currentRegion = "americas";
-    const tolerance = 30;
+    let currentQuestionIndex = 0;
+
+    function loadRegion(region) {
+      const data = regionData[region];
+      map.src = data.img;
+      marker.style.display = "none";
+      feedback.textContent = "";
+      mapContainer.querySelectorAll(".click-point").forEach(el => el.remove());
+      data.points.forEach((pt, i) => {
+        const dot = document.createElement("div");
+        dot.className = "click-point";
+        dot.style.left = `${pt.x}px`;
+        dot.style.top = `${pt.y}px`;
+        dot.onclick = () => checkAnswer(i);
+        mapContainer.appendChild(dot);
+      });
+      currentQuestionIndex = 0;
+      askQuestion();
+    }
+
+    function askQuestion() {
+      const question = regionData[currentRegion].points[currentQuestionIndex].name;
+      questionEl.textContent = question;
+    }
+
+    function checkAnswer(clickedIndex) {
+      const correctIndex = currentQuestionIndex;
+      const correctPoint = regionData[currentRegion].points[correctIndex];
+      const clickedPoint = regionData[currentRegion].points[clickedIndex];
+
+      marker.style.left = `${clickedPoint.x}px`;
+      marker.style.top = `${clickedPoint.y}px`;
+      marker.style.display = "block";
+
+      if (clickedIndex === correctIndex) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        currentQuestionIndex++;
+        if (currentQuestionIndex < regionData[currentRegion].points.length) {
+          setTimeout(() => {
+            askQuestion();
+            feedback.textContent = "";
+          }, 1000);
+        } else {
+          questionEl.textContent = "All questions done!";
+        }
+      } else {
+        feedback.textContent = "❌ Try again!";
+        feedback.style.color = "red";
+      }
+    }
 
     regionSelect.addEventListener("change", (e) => {
       currentRegion = e.target.value;
-      map.src = regionData[currentRegion].img;
-      marker.style.display = "none";
-      feedback.textContent = "";
+      loadRegion(currentRegion);
     });
 
-    map.addEventListener("click", function (e) {
-      const rect = map.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      marker.style.left = `${x}px`;
-      marker.style.top = `${y}px`;
-      marker.style.display = "block";
-
-      const { x: correctX, y: correctY } = regionData[currentRegion].correctLocation;
-      const dx = x - correctX;
-      const dy = y - correctY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      if (distance < tolerance) {
-        feedback.textContent = "Correct!";
-        feedback.style.color = "green";
-      } else {
-        feedback.textContent = "Try again!";
-        feedback.style.color = "red";
-      }
-    });
+    window.onload = () => loadRegion(currentRegion);
   </script>
 </body>
 </html>
